@@ -29,10 +29,21 @@
   --header-h: 80px;
 }
 
-/* Transición suave entre páginas (sin parpadeo en blanco) */
-@view-transition { navigation: auto; }
-::view-transition-old(root),
-::view-transition-new(root) { animation-duration: .18s; }
+/* Fuentes alojadas en el sitio (sin depender de servidores externos) */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('assets/fonts/montserrat-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('assets/fonts/cinzel-600-latin.woff2') format('woff2');
+}
 
 /* ─── Reset ───────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
@@ -47,7 +58,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
+/* clip evita el desbordamiento sin romper el encabezado fijo en iOS */
+@supports (overflow-x: clip) { body { overflow-x: clip; } }
 h1, h2, h3, h4 {
   margin: 0;
   color: var(--ink);
@@ -293,14 +307,17 @@ button, input, select, textarea { font: inherit; color: inherit; }
   padding: 22px 0;
   border-top: 1px solid rgba(255,255,255,0.12);
   text-decoration: none;
-  transition: padding-left .2s;
 }
 .hero-menu a:last-child { border-bottom: 1px solid rgba(255,255,255,0.12); }
-.hero-menu a:hover { padding-left: 8px; }
 .hero-menu strong { color: var(--white); font-size: 1.12rem; }
 .hero-menu small { grid-column: 1; font-size: 0.85rem; color: var(--silver); }
-.hero-menu .arrow { grid-row: 1 / span 2; grid-column: 2; color: var(--silver); font-size: 1.3rem; }
-.hero-menu a:hover .arrow { color: var(--white); }
+.hero-menu .arrow { grid-row: 1 / span 2; grid-column: 2; color: var(--silver); font-size: 1.3rem; transition: transform .2s, color .2s; }
+.hero-menu strong, .hero-menu small { transition: transform .2s; }
+/* Efectos de mouse solo en dispositivos con mouse (en celular se quedan "pegados") */
+@media (hover: hover) {
+  .hero-menu a:hover strong, .hero-menu a:hover small { transform: translateX(8px); }
+  .hero-menu a:hover .arrow { color: var(--white); transform: translateX(4px); }
+}
 
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr; gap: 48px; padding: 56px 16px 64px; }
@@ -722,7 +739,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 @media (max-width: 900px) {
   .footer-grid { grid-template-columns: 1fr 1fr; }
-  .footer-brand { grid-column: 1 / -1; }
+  .footer-brand, .footer-grid > div:last-child { grid-column: 1 / -1; }
 }
 @media (max-width: 480px) {
   .footer-grid { grid-template-columns: 1fr; gap: 28px; }
@@ -753,26 +770,23 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* Al cargar: encabezado de la página */
 .hero .label, .hero h1, .hero-lede, .hero-actions,
 .page-head .breadcrumb, .page-head h1, .page-head p {
-  animation: fade-up .9s cubic-bezier(.2,.7,.2,1) both;
+  animation: fade-up .6s cubic-bezier(.2,.7,.2,1) both;
 }
-.hero .label, .page-head .breadcrumb { animation-delay: .05s; }
-.hero h1, .page-head h1               { animation-delay: .15s; }
-.hero-lede, .page-head p              { animation-delay: .3s; }
-.hero-actions                         { animation-delay: .45s; }
+.hero h1, .page-head h1               { animation-delay: .06s; }
+.hero-lede, .page-head p              { animation-delay: .14s; }
+.hero-actions                         { animation-delay: .22s; }
 
-.hero-menu { animation: fade-up .9s .35s cubic-bezier(.2,.7,.2,1) both; }
-.hero-menu a { animation: fade-left .8s cubic-bezier(.2,.7,.2,1) both; }
-.hero-menu a:nth-of-type(1) { animation-delay: .55s; }
-.hero-menu a:nth-of-type(2) { animation-delay: .68s; }
-.hero-menu a:nth-of-type(3) { animation-delay: .81s; }
-
-.subnav { animation: fade-up .7s .4s cubic-bezier(.2,.7,.2,1) both; }
+.hero-menu { animation: fade-up .6s .18s cubic-bezier(.2,.7,.2,1) both; }
+.hero-menu a { animation: fade-left .55s cubic-bezier(.2,.7,.2,1) both; }
+.hero-menu a:nth-of-type(1) { animation-delay: .28s; }
+.hero-menu a:nth-of-type(2) { animation-delay: .36s; }
+.hero-menu a:nth-of-type(3) { animation-delay: .44s; }
 
 /* Al hacer scroll (main.js agrega .reveal solo a lo que está fuera de vista) */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
+  transform: translateY(20px);
+  transition: opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1);
 }
 .reveal.in { opacity: 1; transform: none; }
 

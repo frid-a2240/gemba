@@ -23,8 +23,11 @@ if (location.protocol.startsWith('http')) {
   if (HTMLScriptElement.supports && HTMLScriptElement.supports('speculationrules')) {
     const rules = document.createElement('script');
     rules.type = 'speculationrules';
+    // prefetch (solo el HTML, muy ligero) al acercarse a un enlace;
+    // prerender (página completa) solo al presionarlo, para no cargar el celular
     rules.textContent = JSON.stringify({
-      prerender: [{ where: { href_matches: '/*' }, eagerness: 'moderate' }],
+      prefetch: [{ where: { href_matches: '/*' }, eagerness: 'moderate' }],
+      prerender: [{ where: { href_matches: '/*' }, eagerness: 'conservative' }],
     });
     document.head.append(rules);
   } else {
@@ -61,7 +64,7 @@ if (motionOK) {
     if (!belowFold(el)) return;
     // Escalonar elementos hermanos (columnas, pasos, filas)
     const i = [...el.parentElement.children].indexOf(el);
-    el.style.transitionDelay = `${Math.min(i, 5) * 110}ms`;
+    el.style.transitionDelay = `${Math.min(i, 4) * 70}ms`;
     el.classList.add('reveal');
     pending.push(el);
   });
@@ -78,7 +81,7 @@ if (motionOK) {
     pending = pending.filter(el => {
       if (belowFold(el)) return true;
       el.classList.add('in');
-      setTimeout(() => { el.style.transitionDelay = ''; }, 1600);
+      setTimeout(() => { el.style.transitionDelay = ''; }, 1000);
       return false;
     });
     if (!pending.length) {
