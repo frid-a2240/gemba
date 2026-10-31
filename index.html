@@ -2,521 +2,255 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Instituto GENBA — Capacitación, Consultoría y Auditorías</title>
-  <meta name="description" content="Instituto GENBA. Consultoría en sistemas de gestión, capacitación en Lean Manufacturing, Six Sigma, ingeniería de calidad y sector automotriz, y auditorías de primera y segunda parte." />
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-  <link rel="apple-touch-icon" href="assets/favicon.svg" />
-
-  <!-- Fuentes -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>GENBA Institution — Capacitación, Consultoría y Auditoría</title>
+  <meta name="description" content="Capacitación, consultoría y auditoría de segunda parte en sistemas de gestión de calidad, ambiental, energético y SST para los sectores automotriz, dispositivos médicos, aeroespacial, electrónico y metal-mecánico." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <meta property="og:title" content="GENBA Institution" />
+  <meta property="og:description" content="Excelencia · Integridad · Desarrollo. Capacitación, consultoría y auditoría de segunda parte." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <script src="main.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       HEADER
-       ═══════════════════════════════════════════════════════════ -->
+
+
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#" class="logo" aria-label="Instituto GENBA">
-        <svg viewBox="0 0 320 90" class="logo-svg" aria-hidden="true">
-          <g stroke-linecap="round" stroke-width="6" fill="none">
-            <line x1="18" y1="78" x2="52" y2="12" stroke="#0F172A"/>
-            <line x1="30" y1="78" x2="60" y2="20" stroke="#0F172A"/>
-            <line x1="52" y1="12" x2="86" y2="78" stroke="#2563EB"/>
-            <line x1="60" y1="20" x2="90" y2="78" stroke="#2563EB"/>
-          </g>
-          <text x="108" y="55" class="logo-word">GENBA</text>
-          <text x="109" y="75" class="logo-sub">INSTITUTO</text>
-        </svg>
+      <a href="index.html" class="brand" aria-label="GENBA Institution, inicio">
+        <img class="brand-mark" src="assets/logo-g.png" alt="" width="457" height="481" /><img class="brand-wordmark" src="assets/logo-wordmark.png" alt="" width="873" height="228" />
       </a>
-
-      <nav class="nav" aria-label="Principal">
-        <a href="#inicio" class="active">Inicio</a>
-        <a href="#servicios">Servicios</a>
-        <a href="#cursos">Cursos</a>
-        <a href="#testimonios">Testimonios</a>
-        <a href="#nosotros">Nosotros</a>
-        <a href="#contacto">Contacto</a>
+      <button class="nav-toggle" type="button" aria-controls="nav" aria-expanded="false">
+        <span class="nav-toggle-bars" aria-hidden="true"><span></span></span>Menú
+      </button>
+      <nav class="nav" id="nav" aria-label="Principal">
+        <a href="index.html" aria-current="page">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="enfoque.html">Enfoque</a>
+        <a href="sectores.html">Sectores</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="contacto.html" class="btn btn-primary">Contacto</a>
       </nav>
-
-      <a href="#contacto" class="btn btn-primary btn-sm">Cotizar</a>
     </div>
   </header>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       HERO
-       ═══════════════════════════════════════════════════════════ -->
-  <section class="hero" id="inicio">
-    <div class="container hero-grid">
-      <div class="hero-copy">
-        <span class="eyebrow">
-          <span class="eyebrow-dot"></span>
-          Capacitación · Consultoría · Auditorías
-        </span>
-        <h1>
-          Elevamos tu operación a
-          <span class="highlight">estándares de clase mundial</span>.
-        </h1>
-        <p class="lede">
-          Acompañamos a empresas de manufactura y servicios en la
-          implementación de sistemas de gestión, formación de talento
-          y auditorías que impulsan resultados medibles.
-        </p>
-        <div class="hero-cta">
-          <a href="#servicios" class="btn btn-primary">Ver servicios</a>
-          <a href="#contacto" class="btn btn-ghost">
-            Hablar con un consultor
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </div>
-      </div>
+  <main id="contenido">
 
-      <div class="hero-visual">
-        <div class="hero-card hero-card-main">
-          <div class="hero-card-header">
-            <div class="hero-card-dot"></div>
-            <span>Programa activo</span>
-          </div>
-          <h3>Lean Six Sigma <br/>Green Belt</h3>
-          <div class="hero-card-meta">
-            <div>
-              <span class="meta-label">Duración</span>
-              <span class="meta-value">80 hrs</span>
-            </div>
-            <div>
-              <span class="meta-label">Modalidad</span>
-              <span class="meta-value">Híbrida</span>
-            </div>
-            <div>
-              <span class="meta-label">Certificación</span>
-              <span class="meta-value">ASQ</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero-card hero-card-mini hero-card-1">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          <div>
-            <strong>IATF 16949</strong>
-            <small>Implementación completa</small>
-          </div>
-        </div>
-
-        <div class="hero-card hero-card-mini hero-card-2">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
-          <div>
-            <strong>+38%</strong>
-            <small>OEE promedio</small>
-          </div>
-        </div>
-
-        <div class="hero-blob"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       STATS
-       ═══════════════════════════════════════════════════════════ -->
-  <section class="stats">
-    <div class="container">
-      <div class="stats-card">
-        <div class="stat">
-          <div class="stat-value">+8,400</div>
-          <div class="stat-label">Profesionales formados</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">+15</div>
-          <div class="stat-label">Años de experiencia</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">+280</div>
-          <div class="stat-label">Empresas atendidas</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">+190</div>
-          <div class="stat-label">Auditorías realizadas</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">98%</div>
-          <div class="stat-label">Clientes recurrentes</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       SERVICIOS
-       ═══════════════════════════════════════════════════════════ -->
-  <section class="services" id="servicios">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">
-          <span class="eyebrow-dot"></span>
-          Nuestros servicios
-        </span>
-        <h2>Tres ejes que transforman tu operación</h2>
-        <p class="section-lede">
-          Diseñamos soluciones integradas para que la mejora no se quede en el aula:
-          se implementa, se audita y se sostiene.
-        </p>
-      </div>
-
-      <div class="service-grid">
-
-        <!-- Consultoría -->
-        <article class="service-card">
-          <div class="service-icon service-icon-blue">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-              <line x1="9" y1="15" x2="15" y2="15"/>
-              <line x1="9" y1="11" x2="15" y2="11"/>
-            </svg>
-          </div>
-          <h3>Consultoría</h3>
-          <p>
-            Implementación de normas y sistemas de gestión con acompañamiento
-            desde el diagnóstico hasta la certificación.
-          </p>
-          <ul class="service-list">
-            <li>ISO 9001 · ISO 14001 · ISO 45001</li>
-            <li>IATF 16949 (sector automotriz)</li>
-            <li>Sistemas integrados de gestión</li>
-            <li>Diagnóstico y plan de cierre de brechas</li>
-          </ul>
-          <a href="#contacto" class="service-link">
-            Conocer más
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </article>
-
-        <!-- Capacitación (destacada) -->
-        <article class="service-card featured">
-          <div class="ribbon">Más solicitado</div>
-          <div class="service-icon service-icon-gold">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-            </svg>
-          </div>
-          <h3>Capacitación</h3>
-          <p>
-            Programas en vivo, en sitio y online orientados a la calidad
-            de procesos y a la certificación profesional.
-          </p>
-          <ul class="service-list">
-            <li>Lean Manufacturing</li>
-            <li>Six Sigma (Yellow, Green, Black Belt)</li>
-            <li>Ingeniería de calidad</li>
-            <li>Sector automotriz (Core Tools, APQP, PPAP)</li>
-            <li>Formación de auditores internos</li>
-          </ul>
-          <a href="#cursos" class="service-link">
-            Ver catálogo
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </article>
-
-        <!-- Auditorías -->
-        <article class="service-card">
-          <div class="service-icon service-icon-navy">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9 11l3 3L22 4"/>
-              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-            </svg>
-          </div>
-          <h3>Auditorías</h3>
-          <p>
-            Verificamos la conformidad y madurez de tu sistema de gestión
-            con auditores certificados y enfoque en oportunidades reales.
-          </p>
-          <ul class="service-list">
-            <li>Auditorías de primera parte (internas)</li>
-            <li>Auditorías de segunda parte (a proveedores)</li>
-            <li>Reportes ejecutivos con hallazgos priorizados</li>
-            <li>Plan de acción y seguimiento</li>
-          </ul>
-          <a href="#contacto" class="service-link">
-            Agendar diagnóstico
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       CURSOS
-       ═══════════════════════════════════════════════════════════ -->
-  <section class="courses" id="cursos">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow eyebrow-light">
-          <span class="eyebrow-dot"></span>
-          Catálogo de capacitación
-        </span>
-        <h2>Rutas de formación por especialidad</h2>
-        <p class="section-lede">
-          Cada programa combina fundamentos, casos reales y proyectos aplicables
-          a tu operación desde el primer módulo.
-        </p>
-      </div>
-
-      <div class="course-grid">
-
-        <article class="course-card">
-          <div class="course-tag tag-lean">Lean</div>
-          <h4>Lean Manufacturing</h4>
-          <p>Value Stream Mapping, 5S, SMED, Kaizen, gestión visual y trabajo estandarizado.</p>
-          <div class="course-meta">
-            <span>40 hrs</span>
-            <span>·</span>
-            <span>Presencial / Online</span>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-tag tag-six">Six Sigma</div>
-          <h4>Six Sigma Green Belt</h4>
-          <p>Metodología DMAIC, análisis estadístico con Minitab y proyecto de mejora certificable.</p>
-          <div class="course-meta">
-            <span>80 hrs</span>
-            <span>·</span>
-            <span>Híbrido</span>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-tag tag-six">Six Sigma</div>
-          <h4>Six Sigma Black Belt</h4>
-          <p>Diseño de experimentos, análisis multivariado y liderazgo de proyectos de alto impacto.</p>
-          <div class="course-meta">
-            <span>120 hrs</span>
-            <span>·</span>
-            <span>Híbrido</span>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-tag tag-quality">Calidad</div>
-          <h4>Ingeniería de Calidad</h4>
-          <p>SPC, MSA, AMEF (FMEA), planes de control y análisis de causa raíz aplicado.</p>
-          <div class="course-meta">
-            <span>32 hrs</span>
-            <span>·</span>
-            <span>Presencial / Online</span>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-tag tag-auto">Automotriz</div>
-          <h4>Core Tools Automotriz</h4>
-          <p>APQP, PPAP, AMEF, SPC y MSA conforme a los requerimientos de IATF 16949.</p>
-          <div class="course-meta">
-            <span>40 hrs</span>
-            <span>·</span>
-            <span>En sitio</span>
-          </div>
-        </article>
-
-        <article class="course-card">
-          <div class="course-tag tag-audit">Auditoría</div>
-          <h4>Formación de Auditores Internos</h4>
-          <p>Auditor interno ISO 9001 e IATF 16949 con práctica dirigida y evaluación final.</p>
-          <div class="course-meta">
-            <span>24 hrs</span>
-            <span>·</span>
-            <span>Presencial / Online</span>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       TESTIMONIOS
-       ═══════════════════════════════════════════════════════════ -->
-  <section class="testimonials" id="testimonios">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">
-          <span class="eyebrow-dot"></span>
-          Voces de nuestros clientes
-        </span>
-        <h2>Lo que dicen las empresas que ya trabajaron con nosotros</h2>
-      </div>
-
-      <div class="testimonial-grid">
-
-        <figure class="testimonial-card">
-          <svg class="quote-mark" width="36" height="36" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M9.5 4C5.4 4 2 7.4 2 11.5V20h8v-8H5.5c0-2.5 2-4.5 4.5-4.5V4zm12 0c-4.1 0-7.5 3.4-7.5 7.5V20h8v-8h-4.5c0-2.5 2-4.5 4.5-4.5V4z"/>
-          </svg>
-          <blockquote>
-            El acompañamiento en la implementación de IATF fue clave para lograr la certificación
-            en el primer intento. El equipo de GENBA entiende tanto la norma como el piso de producción.
-          </blockquote>
-          <figcaption>
-            <div class="testimonial-person">
-              <div class="avatar avatar-1">MR</div>
-              <div>
-                <strong>Mariana Rangel</strong>
-                <small>Gerente de Calidad · Autopartes del Bajío</small>
-              </div>
-            </div>
-          </figcaption>
-        </figure>
-
-        <figure class="testimonial-card">
-          <svg class="quote-mark" width="36" height="36" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M9.5 4C5.4 4 2 7.4 2 11.5V20h8v-8H5.5c0-2.5 2-4.5 4.5-4.5V4zm12 0c-4.1 0-7.5 3.4-7.5 7.5V20h8v-8h-4.5c0-2.5 2-4.5 4.5-4.5V4z"/>
-          </svg>
-          <blockquote>
-            Formamos a 42 líderes en Lean y Six Sigma Green Belt. En seis meses recuperamos
-            la inversión con solo dos de los proyectos que salieron del programa.
-          </blockquote>
-          <figcaption>
-            <div class="testimonial-person">
-              <div class="avatar avatar-2">JS</div>
-              <div>
-                <strong>Jesús Sandoval</strong>
-                <small>Director de Operaciones · Grupo Manufacturero Norte</small>
-              </div>
-            </div>
-          </figcaption>
-        </figure>
-
-        <figure class="testimonial-card">
-          <svg class="quote-mark" width="36" height="36" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M9.5 4C5.4 4 2 7.4 2 11.5V20h8v-8H5.5c0-2.5 2-4.5 4.5-4.5V4zm12 0c-4.1 0-7.5 3.4-7.5 7.5V20h8v-8h-4.5c0-2.5 2-4.5 4.5-4.5V4z"/>
-          </svg>
-          <blockquote>
-            Sus auditorías de segunda parte nos permitieron identificar riesgos reales en
-            proveedores críticos. Los reportes son claros, accionables y con seguimiento serio.
-          </blockquote>
-          <figcaption>
-            <div class="testimonial-person">
-              <div class="avatar avatar-3">VC</div>
-              <div>
-                <strong>Verónica Castañeda</strong>
-                <small>Coordinadora SQA · Ensambles Industriales MX</small>
-              </div>
-            </div>
-          </figcaption>
-        </figure>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       CTA FINAL
-       ═══════════════════════════════════════════════════════════ -->
-  <section class="cta-final" id="contacto">
-    <div class="container">
-      <div class="cta-card">
+    <section class="hero on-dark">
+      <div class="container hero-inner">
         <div>
-          <span class="eyebrow eyebrow-light">
-            <span class="eyebrow-dot"></span>
-            Empecemos
-          </span>
-          <h2>¿Listos para llevar su operación al siguiente nivel?</h2>
-          <p>
-            Agenda una sesión de diagnóstico sin costo. Escuchamos tus objetivos
-            y te presentamos una propuesta a la medida en menos de 5 días hábiles.
+          <span class="label">Capacitación · Consultoría · Auditoría</span>
+          <h1>Mejora continua.<br/>Excelencia sostenible.</h1>
+          <p class="hero-lede">
+            Acompañamos a la industria en la implementación de sistemas de gestión
+            de calidad, ambiental, energético y de seguridad y salud en el trabajo,
+            desde el piso de producción.
           </p>
+          <div class="hero-actions">
+            <a href="contacto.html" class="btn btn-light">Agendar diagnóstico</a>
+            <a href="servicios.html" class="btn btn-outline-light">Conocer servicios</a>
+          </div>
         </div>
-        <div class="cta-actions">
-          <a href="mailto:contacto@institutogenba.com" class="btn btn-primary btn-lg">Agendar diagnóstico</a>
-          <a href="tel:+525555555555" class="btn btn-ghost btn-ghost-light">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            Llamar ahora
+
+        <nav class="hero-menu" aria-label="Servicios">
+          <div class="hero-menu-title">¿Qué necesita tu organización?</div>
+          <a href="servicios.html#capacitacion">
+            <strong>Capacitación</strong>
+            <small>Formar a mi equipo en normas y herramientas de mejora</small>
+            <span class="arrow" aria-hidden="true">→</span>
           </a>
+          <a href="servicios.html#auditoria">
+            <strong>Auditoría de 2da parte</strong>
+            <small>Evaluar y asegurar a mis proveedores</small>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="servicios.html#consultoria">
+            <strong>Consultoría</strong>
+            <small>Implementar o certificar un sistema de gestión</small>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </nav>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container statement">
+        <dl class="definition">
+          <dt>Genba</dt>
+          <dd><span class="kanji" lang="ja">現場</span>Término japonés que significa “el lugar real”: donde se fabrica el producto y se crea el valor.</dd>
+        </dl>
+        <p class="statement-text">
+          Creemos que la mejora no ocurre en una sala de juntas ni en un manual.
+          Ocurre en el <em>genba</em>. Por eso nuestro trabajo empieza en tu
+          planta, con tu gente y con tus procesos reales.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="label">Servicios</span>
+            <h2>Tres servicios, un mismo ciclo de mejora</h2>
+          </div>
+          <p>Formamos a tu gente, implementamos contigo y verificamos a tu cadena de suministro. Cada servicio puede contratarse por separado o como un programa integral.</p>
+        </div>
+        <div class="columns">
+          <article class="col">
+            <span class="col-num">01</span>
+            <h3>Capacitación</h3>
+            <p>Programas en sitio, en línea o híbridos en normas ISO, Core Tools, Lean Manufacturing, Six Sigma y formación de auditores internos.</p>
+            <a href="servicios.html#capacitacion" class="link">Ver programas <span aria-hidden="true">→</span></a>
+          </article>
+          <article class="col">
+            <span class="col-num">02</span>
+            <h3>Auditoría de 2da parte</h3>
+            <p>Auditamos a tus proveedores en tu nombre con auditores calificados, reportes claros y seguimiento a las acciones correctivas.</p>
+            <a href="servicios.html#auditoria" class="link">Conocer el servicio <span aria-hidden="true">→</span></a>
+          </article>
+          <article class="col">
+            <span class="col-num">03</span>
+            <h3>Consultoría</h3>
+            <p>Del diagnóstico a la certificación: implementamos sistemas de gestión que funcionan en el día a día de tu operación.</p>
+            <a href="servicios.html#consultoria" class="link">Conocer el servicio <span aria-hidden="true">→</span></a>
+          </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       FOOTER
-       ═══════════════════════════════════════════════════════════ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="label">Enfoque</span>
+            <h2>Cuatro sistemas de gestión</h2>
+          </div>
+          <p>Trabajamos cada sistema de forma independiente o integrados en uno solo, según la madurez y los objetivos de tu organización.</p>
+        </div>
+        <div class="columns columns-4">
+          <article class="col">
+            <h3>Calidad</h3>
+            <p>ISO 9001, IATF 16949, ISO 13485 y AS9100.</p>
+            <a href="enfoque.html#calidad" class="link">Ver más <span aria-hidden="true">→</span></a>
+          </article>
+          <article class="col">
+            <h3>Ambiental</h3>
+            <p>ISO 14001 y cumplimiento de requisitos legales ambientales.</p>
+            <a href="enfoque.html#ambiental" class="link">Ver más <span aria-hidden="true">→</span></a>
+          </article>
+          <article class="col">
+            <h3>Energético</h3>
+            <p>ISO 50001, línea base e indicadores de desempeño energético.</p>
+            <a href="enfoque.html#energetico" class="link">Ver más <span aria-hidden="true">→</span></a>
+          </article>
+          <article class="col">
+            <h3>SST</h3>
+            <p>ISO 45001 y normatividad de la STPS en seguridad y salud.</p>
+            <a href="enfoque.html#sst" class="link">Ver más <span aria-hidden="true">→</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="label">Sectores</span>
+            <h2>Experiencia en la industria que exige más</h2>
+          </div>
+          <p>Cada sector tiene sus propias normas, clientes y riesgos. Llegamos conociendo los tuyos.</p>
+        </div>
+        <nav class="index-list" aria-label="Sectores">
+          <a href="sectores.html#automotriz"><span class="index-num">01</span><strong>Automotriz</strong><span class="desc">IATF 16949, Core Tools y requisitos específicos del cliente</span><span class="arrow" aria-hidden="true">→</span></a>
+          <a href="sectores.html#medicos"><span class="index-num">02</span><strong>Dispositivos médicos</strong><span class="desc">ISO 13485 y gestión de riesgos</span><span class="arrow" aria-hidden="true">→</span></a>
+          <a href="sectores.html#aeroespacial"><span class="index-num">03</span><strong>Aeroespacial</strong><span class="desc">AS9100 e inspección de primer artículo</span><span class="arrow" aria-hidden="true">→</span></a>
+          <a href="sectores.html#electronicos"><span class="index-num">04</span><strong>Electrónicos</strong><span class="desc">IPC-A-610 y control de ESD</span><span class="arrow" aria-hidden="true">→</span></a>
+          <a href="sectores.html#metalmecanico"><span class="index-num">05</span><strong>Metal-mecánico</strong><span class="desc">Procesos especiales, maquinado y soldadura</span><span class="arrow" aria-hidden="true">→</span></a>
+        </nav>
+      </div>
+    </section>
+
+    <section class="section section-dark on-dark">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="label">Cómo trabajamos</span>
+            <h2>Un método claro, de principio a fin</h2>
+          </div>
+          <p>Sabrás desde el primer día qué vamos a hacer, cuánto tiempo tomará y qué vas a recibir.</p>
+        </div>
+        <ol class="steps">
+          <li class="step"><span class="step-num">01</span><h3>Diagnóstico</h3><p>Visitamos tu planta, entrevistamos a tu equipo y medimos la brecha contra la norma.</p></li>
+          <li class="step"><span class="step-num">02</span><h3>Propuesta</h3><p>Alcance, tiempos y entregables claros, en menos de 5 días hábiles.</p></li>
+          <li class="step"><span class="step-num">03</span><h3>Implementación</h3><p>Capacitamos y acompañamos en piso hasta que el sistema funciona por sí solo.</p></li>
+          <li class="step"><span class="step-num">04</span><h3>Verificación</h3><p>Auditamos resultados, cerramos hallazgos y definimos el siguiente nivel.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="cta-band on-dark">
+      <div class="container">
+        <div>
+          <h2>Agenda un diagnóstico sin costo</h2>
+          <p>Cuéntanos tus objetivos y te presentamos una propuesta a la medida.</p>
+        </div>
+        <div class="actions">
+          <a href="contacto.html" class="btn btn-light">Contactar a un consultor</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <svg viewBox="0 0 320 90" class="logo-svg logo-svg-light" aria-hidden="true">
-            <g stroke-linecap="round" stroke-width="6" fill="none">
-              <line x1="18" y1="78" x2="52" y2="12" stroke="#FFFFFF"/>
-              <line x1="30" y1="78" x2="60" y2="20" stroke="#FFFFFF"/>
-              <line x1="52" y1="12" x2="86" y2="78" stroke="#60A5FA"/>
-              <line x1="60" y1="20" x2="90" y2="78" stroke="#60A5FA"/>
-            </g>
-            <text x="108" y="55" class="logo-word logo-word-light">GENBA</text>
-            <text x="109" y="75" class="logo-sub logo-sub-light">INSTITUTO</text>
-          </svg>
-          <p>Capacitación, consultoría y auditorías para llevar tu sistema de gestión al siguiente nivel.</p>
+          <a href="index.html" class="brand brand-light" aria-label="GENBA Institution, inicio">
+            <img class="brand-mark" src="assets/logo-g-white.png" alt="" width="457" height="481" /><img class="brand-wordmark" src="assets/logo-wordmark-white.png" alt="" width="873" height="228" />
+          </a>
+          <p>Excelencia · Integridad · Desarrollo</p>
         </div>
-
         <div>
-          <h5>Servicios</h5>
+          <h2>Servicios</h2>
           <ul>
-            <li><a href="#servicios">Consultoría</a></li>
-            <li><a href="#servicios">Capacitación</a></li>
-            <li><a href="#servicios">Auditorías</a></li>
+            <li><a href="servicios.html#capacitacion">Capacitación</a></li>
+            <li><a href="servicios.html#auditoria">Auditoría de 2da parte</a></li>
+            <li><a href="servicios.html#consultoria">Consultoría</a></li>
           </ul>
         </div>
-
         <div>
-          <h5>Cursos</h5>
+          <h2>Instituto</h2>
           <ul>
-            <li><a href="#cursos">Lean Manufacturing</a></li>
-            <li><a href="#cursos">Six Sigma</a></li>
-            <li><a href="#cursos">Core Tools Automotriz</a></li>
-            <li><a href="#cursos">Auditores internos</a></li>
+            <li><a href="enfoque.html">Enfoque</a></li>
+            <li><a href="sectores.html">Sectores</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
           </ul>
         </div>
-
         <div>
-          <h5>Contacto</h5>
+          <h2>Contacto</h2>
           <ul>
-            <li>contacto@institutogenba.com</li>
-            <li>+52 (55) 5555 5555</li>
-            <li>Ciudad de México, MX</li>
+            <li><a href="mailto:contacto@institutogenba.com">contacto@institutogenba.com</a></li>
+            <li><a href="tel:+525555555555">+52 (55) 5555 5555</a></li>
+            <li>www.genbainstitution.com</li>
           </ul>
         </div>
       </div>
-
       <div class="footer-bottom">
-        <span>© 2026 Instituto GENBA. Todos los derechos reservados.</span>
-        <div class="footer-legal">
-          <a href="#">Aviso de privacidad</a>
-          <a href="#">Términos</a>
-        </div>
+        <span>© 2026 GENBA Institution. Todos los derechos reservados.</span>
       </div>
     </div>
   </footer>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       Nav activo al hacer click
-       ═══════════════════════════════════════════════════════════ -->
-  <script>
-    document.querySelectorAll('.nav a').forEach(link => {
-      link.addEventListener('click', () => {
-        document.querySelectorAll('.nav a').forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-      });
-    });
-  </script>
-
 </body>
 </html>
