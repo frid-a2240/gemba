@@ -47,12 +47,16 @@
       <div class="container">
         <ol class="breadcrumb"><li><a href="index.html">Inicio</a></li><li aria-current="page">Verificar certificado</li></ol>
         <h1>Verificación de certificados</h1>
-        <p>Confirme la autenticidad de los certificados emitidos por GENBA Institution escaneando su código QR o capturando el folio.</p>
+        <p>Confirme la autenticidad de los certificados emitidos por GENBA Institution.</p>
       </div>
     </section>
 
     <section class="section section-sm">
       <div class="container">
+
+        <p class="verify-empty" id="sin-folio">
+          Para verificar un certificado, escanee el código QR impreso en él.
+        </p>
 
         <div class="status" id="estado" role="status" hidden>
           <span class="status-icon" aria-hidden="true"></span>
@@ -62,38 +66,10 @@
           </div>
         </div>
 
-        <div class="cert-result" id="resultado" hidden>
-          <figure class="cert-image">
-            <a id="cert-link" target="_blank" rel="noopener"><img id="cert-img" alt="" width="2112" height="1632" /></a>
-            <figcaption>Toque la imagen para verla en tamaño completo.</figcaption>
-          </figure>
-          <div class="cert-side">
-            <dl class="cert-data">
-              <dt>Participante</dt><dd id="d-nombre"></dd>
-              <dt>Programa</dt><dd id="d-programa"></dd>
-              <dt>Duración</dt><dd id="d-horas"></dd>
-              <dt>Lugar y fecha</dt><dd id="d-lugar"></dd>
-              <dt>Folio</dt><dd id="d-folio"></dd>
-              <dt>Emitido por</dt><dd id="d-emisor"></dd>
-            </dl>
-            <a class="btn btn-primary" id="d-pdf" download>Descargar PDF</a>
-          </div>
-        </div>
-
-        <form class="verify-form" action="verificar" method="get">
-          <label for="folio">Folio del certificado</label>
-          <div class="verify-row">
-            <input id="folio" name="folio" type="text" placeholder="GB-XXXX-XXXX" maxlength="12"
-                   autocomplete="off" autocapitalize="characters" spellcheck="false" required
-                   pattern="[Gg][Bb]-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}" />
-            <button type="submit" class="btn btn-primary">Verificar</button>
-          </div>
-          <p class="verify-note">
-            Los certificados de GENBA Institution solo pueden verificarse en este sitio.
-            Antes de confiar en el resultado, revise que la dirección del navegador corresponda
-            al sitio oficial de la institución.
-          </p>
-        </form>
+        <figure class="cert-image" id="resultado" hidden>
+          <a id="cert-link" target="_blank" rel="noopener"><img id="cert-img" alt="" width="2112" height="1632" /></a>
+          <figcaption>Toque la imagen para verla en tamaño completo.</figcaption>
+        </figure>
 
       </div>
     </section>
@@ -125,9 +101,7 @@
             <li><a href="enfoque.html">Enfoque</a></li>
             <li><a href="sectores.html">Sectores</a></li>
             <li><a href="nosotros.html">Nosotros</a></li>
-            <li><a href="contacto.html">Contacto</a></li>
-            <li><a href="verificar.html">Verificar certificado</a></li>
-          </ul>
+            <li><a href="contacto.html">Contacto</a></li>          </ul>
         </div>
         <div>
           <h2>Contacto</h2>
