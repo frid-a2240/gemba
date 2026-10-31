@@ -1,0 +1,12 @@
+{
+  "name": "genba-certificados",
+  "private": true,
+  "type": "module",
+  "description": "Generador de certificados con QR de verificación para GENBA Institution",
+  "scripts": {
+    "generar": "node generar.mjs"
+  },
+  "dependencies": {
+    "qrcode": "1.5.4"
+  }
+}

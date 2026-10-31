@@ -1,6 +1,6 @@
 'use strict';
 
-const CONTACT_EMAIL = 'contacto@institutogenba.com';
+const CONTACT_EMAIL = 'roberto.silva@genbainstitution.com';
 
 // ─── Menú móvil ───────────────────────────────────────────────────
 const toggle = document.querySelector('.nav-toggle');
@@ -129,10 +129,10 @@ if (form) {
     if (!form.reportValidity()) return;
 
     const field = name => form.elements[name].value.trim();
-    const subject = `Solicitud de diagnóstico — ${field('empresa')}`;
+    const subject = `Solicitud de información — ${field('empresa')}`;
     const body = [
       `Nombre: ${field('nombre')}`,
-      `Empresa: ${field('empresa')}`,
+      `Organización: ${field('empresa')}`,
       `Correo: ${field('correo')}`,
       `Teléfono: ${field('telefono') || '—'}`,
       `Servicio de interés: ${field('servicio')}`,
@@ -142,6 +142,6 @@ if (form) {
 
     window.location.href =
       `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    status.textContent = 'Se abrió tu aplicación de correo con la solicitud lista para enviar.';
+    status.textContent = 'Se abrió su aplicación de correo con la solicitud lista para enviarse. Gracias por su interés.';
   });
 }

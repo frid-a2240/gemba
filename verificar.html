@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Verificación de certificados — GENBA Institution</title>
+  <meta name="description" content="Verifique la autenticidad de los certificados emitidos por GENBA Institution." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <meta property="og:title" content="GENBA Institution" />
+  <meta property="og:description" content="Excelencia Operacional. Integridad. Desarrollo." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="preload" href="assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/cinzel-600-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="robots" content="noindex" />
+  <script src="main.js" defer></script>
+  <script src="verificar.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="GENBA Institution, inicio">
+        <img class="brand-mark" src="assets/logo-g.png" alt="" width="160" height="168" /><img class="brand-wordmark" src="assets/logo-wordmark.png" alt="" width="482" height="126" />
+      </a>
+      <button class="nav-toggle" type="button" aria-controls="nav" aria-expanded="false">
+        <span class="nav-toggle-bars" aria-hidden="true"><span></span></span>Menú
+      </button>
+      <nav class="nav" id="nav" aria-label="Principal">
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="enfoque.html">Enfoque</a>
+        <a href="sectores.html">Sectores</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="contacto.html" class="btn btn-primary">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+
+    <section class="page-head on-dark">
+      <div class="container">
+        <ol class="breadcrumb"><li><a href="index.html">Inicio</a></li><li aria-current="page">Verificar certificado</li></ol>
+        <h1>Verificación de certificados</h1>
+        <p>Confirme la autenticidad de los certificados emitidos por GENBA Institution escaneando su código QR o capturando el folio.</p>
+      </div>
+    </section>
+
+    <section class="section section-sm">
+      <div class="container">
+
+        <div class="status" id="estado" role="status" hidden>
+          <span class="status-icon" aria-hidden="true"></span>
+          <div>
+            <strong id="estado-titulo"></strong>
+            <span id="estado-texto"></span>
+          </div>
+        </div>
+
+        <div class="cert-result" id="resultado" hidden>
+          <figure class="cert-image">
+            <a id="cert-link" target="_blank" rel="noopener"><img id="cert-img" alt="" width="2112" height="1632" /></a>
+            <figcaption>Toque la imagen para verla en tamaño completo.</figcaption>
+          </figure>
+          <div class="cert-side">
+            <dl class="cert-data">
+              <dt>Participante</dt><dd id="d-nombre"></dd>
+              <dt>Programa</dt><dd id="d-programa"></dd>
+              <dt>Duración</dt><dd id="d-horas"></dd>
+              <dt>Lugar y fecha</dt><dd id="d-lugar"></dd>
+              <dt>Folio</dt><dd id="d-folio"></dd>
+              <dt>Emitido por</dt><dd id="d-emisor"></dd>
+            </dl>
+            <a class="btn btn-primary" id="d-pdf" download>Descargar PDF</a>
+          </div>
+        </div>
+
+        <form class="verify-form" action="verificar" method="get">
+          <label for="folio">Folio del certificado</label>
+          <div class="verify-row">
+            <input id="folio" name="folio" type="text" placeholder="GB-XXXX-XXXX" maxlength="12"
+                   autocomplete="off" autocapitalize="characters" spellcheck="false" required
+                   pattern="[Gg][Bb]-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}" />
+            <button type="submit" class="btn btn-primary">Verificar</button>
+          </div>
+          <p class="verify-note">
+            Los certificados de GENBA Institution solo pueden verificarse en este sitio.
+            Antes de confiar en el resultado, revise que la dirección del navegador corresponda
+            al sitio oficial de la institución.
+          </p>
+        </form>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand brand-light" aria-label="GENBA Institution, inicio">
+            <img class="brand-mark" src="assets/logo-g-white.png" alt="" width="160" height="168" /><img class="brand-wordmark" src="assets/logo-wordmark-white.png" alt="" width="482" height="126" />
+          </a>
+          <p>Excelencia Operacional. Integridad. Desarrollo.</p>
+        </div>
+        <div>
+          <h2>Servicios</h2>
+          <ul>
+            <li><a href="servicios.html#capacitacion">Capacitación especializada</a></li>
+            <li><a href="servicios.html#auditorias">Auditorías</a></li>
+            <li><a href="servicios.html#sistemas">Sistemas de gestión</a></li>
+            <li><a href="servicios.html#excelencia">Excelencia operacional</a></li>
+            <li><a href="servicios.html#desarrollo">Desarrollo profesional</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Institución</h2>
+          <ul>
+            <li><a href="enfoque.html">Enfoque</a></li>
+            <li><a href="sectores.html">Sectores</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+            <li><a href="verificar.html">Verificar certificado</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Contacto</h2>
+          <ul>
+            <li><a href="mailto:roberto.silva@genbainstitution.com">roberto.silva@genbainstitution.com</a></li>
+            <li>www.genbainstitution.com</li>
+            <li>Tijuana, Baja California, México</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 GENBA Institution. Todos los derechos reservados.</span>
+        <span>Excellence Through Integrity and Development</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
