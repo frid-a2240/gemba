@@ -1,2 +1,6 @@
 node_modules/
 tools/certificados/.tmp/
+
+# Archivos sensibles (firma original, secretos): nunca se suben a GitHub
+privado/
+.env*

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Certificados — GENBA Institution</title>
+  <meta name="description" content="Verifique la autenticidad de los certificados emitidos por GENBA Institution mediante su folio o código QR." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <meta property="og:title" content="GENBA Institution" />
+  <meta property="og:description" content="Excelencia Operacional. Integridad. Desarrollo." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="preload" href="assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/cinzel-600-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="main.js" defer></script>
+  <script src="vendor/qrcode.js" defer></script>
+  <script src="cert-render.js" defer></script>
+  <script src="panel-certificados.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="GENBA Institution, inicio">
+        <img class="brand-mark" src="assets/logo-g.png" alt="" width="160" height="168" /><img class="brand-wordmark" src="assets/logo-wordmark.png" alt="" width="482" height="126" />
+      </a>
+      <button class="nav-toggle" type="button" aria-controls="nav" aria-expanded="false">
+        <span class="nav-toggle-bars" aria-hidden="true"><span></span></span>Menú
+      </button>
+      <nav class="nav" id="nav" aria-label="Principal">
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="enfoque.html">Enfoque</a>
+        <a href="sectores.html">Sectores</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="certificados.html" aria-current="page">Certificados</a>
+        <a href="contacto.html" class="btn btn-primary">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+
+    <section class="page-head on-dark">
+      <div class="container">
+        <ol class="breadcrumb"><li><a href="index.html">Inicio</a></li><li aria-current="page">Certificados</li></ol>
+        <h1>Certificados</h1>
+        <p>Cada certificado emitido por GENBA Institution cuenta con un folio único y un código QR que permite verificar su autenticidad.</p>
+      </div>
+    </section>
+
+    <section class="section section-sm">
+      <div class="container">
+
+        <!-- Vista pública -->
+        <div class="cert-access" id="vista-publica">
+          <form class="card-box" id="form-verificar" action="verificar" method="get">
+            <h2>Verificar un certificado</h2>
+            <p>Escanee el código QR del certificado o capture su folio.</p>
+            <label for="v-folio">Folio</label>
+            <div class="field-row">
+              <input id="v-folio" name="folio" type="text" placeholder="GB-XXXX-XXXX" maxlength="12" required
+                     autocomplete="off" autocapitalize="characters" spellcheck="false"
+                     pattern="[Gg][Bb]-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}" />
+              <button type="submit" class="btn btn-primary">Verificar</button>
+            </div>
+          </form>
+
+          <form class="card-box card-box-muted" id="form-login" novalidate>
+            <h2>Acceso administrativo</h2>
+            <p id="login-ayuda">Exclusivo para el personal autorizado de GENBA Institution.</p>
+            <label for="l-usuario">Usuario</label>
+            <input id="l-usuario" name="usuario" type="text" autocomplete="username" maxlength="100" required />
+            <label for="l-contrasena">Contraseña</label>
+            <input id="l-contrasena" name="contrasena" type="password" autocomplete="current-password" maxlength="200" required />
+            <button type="submit" class="btn btn-primary">Entrar</button>
+            <p class="form-msg" id="login-msg" role="alert"></p>
+          </form>
+        </div>
+
+        <!-- Panel de administración (solo con sesión) -->
+        <div class="admin" id="panel" hidden>
+          <div class="admin-bar">
+            <h2>Panel de certificados</h2>
+            <button type="button" class="btn btn-outline" id="btn-salir">Cerrar sesión</button>
+          </div>
+
+          <div class="admin-grid">
+            <form class="card-box" id="form-emitir" novalidate>
+              <h3>Emitir certificado</h3>
+              <label for="e-curso">Nombre del curso</label>
+              <input id="e-curso" name="curso" type="text" maxlength="150" required placeholder="Ej. Auditor Interno ISO 9001:2015" />
+              <label for="e-nombre">Nombre completo de quien acreditó</label>
+              <input id="e-nombre" name="nombre" type="text" maxlength="120" required autocomplete="off" />
+              <label for="e-fecha">Fecha</label>
+              <input id="e-fecha" name="fecha" type="date" required />
+              <button type="submit" class="btn btn-primary" id="btn-emitir">Generar certificado</button>
+              <p class="form-msg" id="emitir-msg" role="alert"></p>
+            </form>
+
+            <div class="card-box result" id="resultado-emision" hidden>
+              <h3>Certificado generado</h3>
+              <p class="result-folio">Folio <strong id="r-folio"></strong></p>
+              <img id="r-img" alt="Vista previa del certificado" width="2112" height="1632" />
+              <div class="result-actions">
+                <button type="button" class="btn btn-primary" id="r-pdf">Descargar PDF</button>
+                <a class="btn btn-outline" id="r-ver" target="_blank" rel="noopener">Ver verificación</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-box list-box">
+            <div class="list-head">
+              <h3>Certificados emitidos</h3>
+              <input type="search" id="buscar" placeholder="Buscar por folio, nombre o curso" maxlength="100" aria-label="Buscar certificados" />
+            </div>
+            <div class="table-wrap">
+              <table class="cert-table">
+                <thead><tr><th scope="col">Folio</th><th scope="col">Nombre</th><th scope="col">Curso</th><th scope="col">Fecha</th><th scope="col">Estado</th><th scope="col"><span class="sr-only">Acciones</span></th></tr></thead>
+                <tbody id="lista"></tbody>
+              </table>
+            </div>
+            <p class="list-empty" id="lista-vacia" hidden>No hay certificados que coincidan.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand brand-light" aria-label="GENBA Institution, inicio">
+            <img class="brand-mark" src="assets/logo-g-white.png" alt="" width="160" height="168" /><img class="brand-wordmark" src="assets/logo-wordmark-white.png" alt="" width="482" height="126" />
+          </a>
+          <p>Excelencia Operacional. Integridad. Desarrollo.</p>
+        </div>
+        <div>
+          <h2>Servicios</h2>
+          <ul>
+            <li><a href="servicios.html#capacitacion">Capacitación especializada</a></li>
+            <li><a href="servicios.html#auditorias">Auditorías</a></li>
+            <li><a href="servicios.html#sistemas">Sistemas de gestión</a></li>
+            <li><a href="servicios.html#excelencia">Excelencia operacional</a></li>
+            <li><a href="servicios.html#desarrollo">Desarrollo profesional</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Institución</h2>
+          <ul>
+            <li><a href="enfoque.html">Enfoque</a></li>
+            <li><a href="sectores.html">Sectores</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="certificados.html">Certificados</a></li>
+            <li><a href="contacto.html">Contacto</a></li>          </ul>
+        </div>
+        <div>
+          <h2>Contacto</h2>
+          <ul>
+            <li><a href="mailto:roberto.silva@genbainstitution.com">roberto.silva@genbainstitution.com</a></li>
+            <li>www.genbainstitution.com</li>
+            <li>Tijuana, Baja California, México</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 GENBA Institution. Todos los derechos reservados.</span>
+        <span>Excellence Through Integrity and Development</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

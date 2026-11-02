@@ -1,2 +1,4 @@
-# Herramientas internas: no se publican en el sitio
+# Herramientas internas y archivos sensibles: no se publican en el sitio
 tools/
+privado/
+.env*

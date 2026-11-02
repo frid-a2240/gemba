@@ -1,0 +1,9 @@
+{
+  "name": "genba-institution",
+  "private": true,
+  "type": "module",
+  "description": "Sitio de GENBA Institution con verificación y emisión de certificados",
+  "engines": {
+    "node": ">=20"
+  }
+}

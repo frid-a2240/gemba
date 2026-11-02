@@ -1,8 +1,9 @@
 'use strict';
 
 // Verificación de certificados: lee el folio de la URL (?folio=GB-XXXX-XXXX)
-// y consulta /certificados/<folio>.json. Todo el contenido se inserta como
-// texto (nunca como HTML) para evitar inyección de código.
+// y consulta la API (certificados emitidos desde el panel). Si no existe ahí,
+// busca en /certificados/<folio>.json (certificados generados con tools/).
+// Todo el contenido se inserta como texto (nunca como HTML).
 
 const FOLIO = /^GB-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}$/;
 const $ = id => document.getElementById(id);
@@ -30,11 +31,25 @@ function mostrar(cert) {
       : 'Este certificado fue emitido por GENBA Institution y se encuentra vigente.');
 
   const img = $('cert-img');
-  img.src = `/certificados/${cert.folio}.png`;
-  img.alt = `Certificado de ${cert.nombre}: ${cert.programa}`;
+  img.src = cert.imagen;
+  img.alt = `Certificado de ${cert.nombre}: ${cert.curso}`;
   $('cert-link').href = img.src;
   $('resultado').hidden = false;
   document.title = `Certificado ${cert.folio} — GENBA Institution`;
+}
+
+async function buscar(folio) {
+  const api = await fetch(`/api/certificados?folio=${folio}`, { cache: 'no-store' }).catch(() => null);
+  if (api && api.ok) {
+    const cert = await api.json();
+    return { ...cert, imagen: `/api/certificado-imagen?folio=${folio}` };
+  }
+  if (api && api.status !== 404 && api.status !== 503) throw new Error('API');
+
+  const estatico = await fetch(`/certificados/${folio}.json`, { cache: 'no-store' });
+  if (!estatico.ok) return null;
+  const cert = await estatico.json();
+  return { ...cert, curso: cert.programa, imagen: `/certificados/${folio}.png` };
 }
 
 function noEncontrado() {
@@ -47,8 +62,7 @@ if (folio) {
   if (!FOLIO.test(folio)) {
     noEncontrado();
   } else {
-    fetch(`/certificados/${folio}.json`, { cache: 'no-store' })
-      .then(r => (r.ok ? r.json() : null))
+    buscar(folio)
       .then(cert => (cert && cert.folio === folio ? mostrar(cert) : noEncontrado()))
       .catch(() => estado('error', 'No fue posible verificar',
         'Ocurrió un problema de conexión. Intente nuevamente en unos momentos.'));
