@@ -33,7 +33,10 @@ async function peticion(ruta, opciones = {}) {
 
 const api = async (ruta, opciones) => (await peticion(ruta, opciones)).json();
 
-const urlVerificacion = folio => `${location.origin}/verificar?folio=${folio}`;
+// Los QR siempre apuntan al dominio oficial (salvo en pruebas locales)
+const SITIO_OFICIAL = 'https://genbainstitution.com';
+const esLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
+const urlVerificacion = folio => `${esLocal ? location.origin : SITIO_OFICIAL}/verificar?folio=${folio}`;
 
 function mensaje(el, texto, tipo = 'error') {
   el.textContent = texto;
