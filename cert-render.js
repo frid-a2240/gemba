@@ -29,9 +29,7 @@ window.GenbaCert = (function () {
       cargarImagen('/assets/logo-g.png'),
       cargarImagen('/assets/logo-wordmark.png'),
     ]);
-    // La firma solo la entrega el servidor a una sesión de administrador
-    const firma = await cargarImagen('/api/firma').catch(() => null);
-    recursos = { logoG, wordmark, firma };
+    recursos = { logoG, wordmark };
     return recursos;
   }
 
@@ -97,8 +95,9 @@ window.GenbaCert = (function () {
   }
 
   // cert: { folio, nombre, curso, fecha }   urlVerificacion: dirección del QR
-  async function dibujar(cert, urlVerificacion) {
-    const { logoG, wordmark, firma } = await cargarRecursos();
+  // firma: imagen de la firma (la entrega el servidor solo con sesión) o null
+  async function dibujar(cert, urlVerificacion, firma) {
+    const { logoG, wordmark } = await cargarRecursos();
     const canvas = document.createElement('canvas');
     canvas.width = W * ESCALA;
     canvas.height = H * ESCALA;

@@ -1,5 +1,5 @@
 // POST /api/login  { usuario, contrasena }
-import { authConfigurada, credencialesValidas, crearSesion, mismoOrigen, ipCliente } from './_lib/auth.js';
+import { authConfigurada, credencialesValidas, crearToken, mismoOrigen, ipCliente } from './_lib/auth.js';
 import { bdConfigurada, redis } from './_lib/redis.js';
 import { json, error, leerCuerpo, metodoNoPermitido } from './_lib/respuesta.js';
 
@@ -29,6 +29,5 @@ export default async function handler(req, res) {
   }
 
   await redis('DEL', clave);
-  crearSesion(res);
-  return json(res, 200, { ok: true });
+  return json(res, 200, { token: crearToken() });
 }

@@ -33,6 +33,12 @@
       ]
     },
     {
+      "source": "/certificados",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    },
+    {
       "source": "/verificar",
       "headers": [
         { "key": "X-Robots-Tag", "value": "noindex" }

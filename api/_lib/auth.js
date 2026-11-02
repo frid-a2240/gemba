@@ -1,8 +1,9 @@
-// Sesión del administrador: cookie HttpOnly firmada con HMAC-SHA256.
+// Sesión del administrador: token firmado con HMAC-SHA256 que la página guarda
+// solo en memoria y envía en la cabecera Authorization. No se usa cookie: al
+// salir, recargar o cerrar la página, la sesión desaparece.
 import { createHmac, createHash, timingSafeEqual } from 'node:crypto';
 
-const COOKIE = 'genba_admin';
-const DURACION_S = 8 * 60 * 60; // 8 horas
+const DURACION_S = 60 * 60; // validez máxima: 1 hora
 
 const secreto = () => process.env.SESSION_SECRET || '';
 
@@ -24,26 +25,16 @@ export function credencialesValidas(usuario, contrasena) {
   return okUsuario && okContrasena;
 }
 
-function atributos(maxAge) {
-  const seguro = process.env.VERCEL ? '; Secure' : '';
-  return `Path=/api; HttpOnly; SameSite=Strict; Max-Age=${maxAge}${seguro}`;
-}
-
-export function crearSesion(res) {
+export function crearToken() {
   const exp = Math.floor(Date.now() / 1000) + DURACION_S;
-  res.setHeader('Set-Cookie', `${COOKIE}=${exp}.${firmar(exp)}; ${atributos(DURACION_S)}`);
-}
-
-export function cerrarSesion(res) {
-  res.setHeader('Set-Cookie', `${COOKIE}=; ${atributos(0)}`);
+  return `${exp}.${firmar(exp)}`;
 }
 
 export function esAdmin(req) {
   if (!authConfigurada()) return false;
-  const cookie = (req.headers.cookie || '').split(/;\s*/).find(c => c.startsWith(`${COOKIE}=`));
-  if (!cookie) return false;
-  const [exp, firma] = cookie.slice(COOKIE.length + 1).split('.');
-  if (!exp || !firma || !/^\d+$/.test(exp)) return false;
+  const m = /^Bearer (\d+)\.([A-Za-z0-9_-]+)$/.exec(req.headers.authorization || '');
+  if (!m) return false;
+  const [, exp, firma] = m;
   if (Number(exp) < Date.now() / 1000) return false;
   const esperada = Buffer.from(firmar(exp));
   const recibida = Buffer.from(firma);
@@ -53,7 +44,7 @@ export function esAdmin(req) {
 // Las peticiones que modifican datos deben venir de este mismo sitio
 export function mismoOrigen(req) {
   const origen = req.headers.origin;
-  if (!origen) return true; // navegadores sin Origin en GET; SameSite=Strict protege la cookie
+  if (!origen) return true;
   try { return new URL(origen).host === req.headers.host; } catch { return false; }
 }
 

@@ -2,20 +2,36 @@
 
 // Página de Certificados: verificación pública y panel del administrador.
 // Todo dato que viene del servidor se inserta como texto (textContent), nunca como HTML.
+//
+// La sesión vive solo en memoria (variable `token`): no se guarda en cookies ni
+// en el almacenamiento del navegador. Al salir de la página, recargar, volver
+// atrás o cerrar la pestaña, la sesión se pierde y hay que iniciar sesión de nuevo.
 
 const $ = id => document.getElementById(id);
 
-const api = async (ruta, opciones = {}) => {
+const INACTIVIDAD_MS = 15 * 60 * 1000;
+let token = null;
+let firma = null;
+
+async function peticion(ruta, opciones = {}) {
+  const headers = {};
+  if (opciones.body) headers['Content-Type'] = 'application/json';
+  if (token) headers.Authorization = `Bearer ${token}`;
   const r = await fetch(ruta, {
-    credentials: 'same-origin',
-    headers: opciones.body ? { 'Content-Type': 'application/json' } : {},
     ...opciones,
+    headers,
+    credentials: 'omit',
+    cache: 'no-store',
     body: opciones.body ? JSON.stringify(opciones.body) : undefined,
   });
-  const datos = await r.json().catch(() => ({}));
-  if (!r.ok) throw Object.assign(new Error(datos.error || 'Ocurrió un error. Intente de nuevo.'), { estado: r.status });
-  return datos;
-};
+  if (!r.ok) {
+    const datos = await r.json().catch(() => ({}));
+    throw Object.assign(new Error(datos.error || 'Ocurrió un error. Intente de nuevo.'), { estado: r.status });
+  }
+  return r;
+}
+
+const api = async (ruta, opciones) => (await peticion(ruta, opciones)).json();
 
 const urlVerificacion = folio => `${location.origin}/verificar?folio=${folio}`;
 
@@ -33,15 +49,13 @@ $('form-verificar').addEventListener('submit', e => {
 
 // ─── Sesión ──────────────────────────────────────────────────────
 async function iniciar() {
-  let sesion = { admin: false, configurado: false };
-  try { sesion = await api('/api/session'); } catch { /* sin servidor: solo vista pública */ }
+  let configurado = false;
+  try { ({ configurado } = await api('/api/session')); } catch { /* sin servidor: solo vista pública */ }
 
-  if (!sesion.configurado) {
+  if (!configurado) {
     $('login-ayuda').textContent = 'El acceso administrativo aún no está disponible.';
     [...$('form-login').elements].forEach(el => { el.disabled = true; });
-    return;
   }
-  if (sesion.admin) mostrarPanel();
 }
 
 $('form-login').addEventListener('submit', async e => {
@@ -53,8 +67,9 @@ $('form-login').addEventListener('submit', async e => {
   boton.disabled = true;
   mensaje(msg, '');
   try {
-    await api('/api/login', { method: 'POST', body: { usuario: form.usuario.value, contrasena: form.contrasena.value } });
+    ({ token } = await api('/api/login', { method: 'POST', body: { usuario: form.usuario.value, contrasena: form.contrasena.value } }));
     form.reset();
+    firma = await peticion('/api/firma').then(r => r.blob()).then(createImageBitmap).catch(() => null);
     mostrarPanel();
   } catch (err) {
     mensaje(msg, err.message);
@@ -63,30 +78,58 @@ $('form-login').addEventListener('submit', async e => {
   }
 });
 
-$('btn-salir').addEventListener('click', async () => {
-  await api('/api/logout', { method: 'POST' }).catch(() => {});
-  location.reload();
-});
+// Borra la sesión y todo dato del panel de la memoria y la pantalla
+function cerrarSesion(aviso = '') {
+  token = null;
+  firma = null;
+  ultimo = null;
+  clearTimeout(temporizador);
+  $('lista').replaceChildren();
+  $('r-img').removeAttribute('src');
+  $('resultado-emision').hidden = true;
+  $('form-emitir').reset();
+  mensaje($('emitir-msg'), '');
+  $('panel').hidden = true;
+  $('vista-publica').hidden = false;
+  mensaje($('login-msg'), aviso, 'info');
+}
+
+$('btn-salir').addEventListener('click', () => cerrarSesion('Sesión cerrada.'));
+
+// Al salir de la página (otra sección, atrás, recargar, cerrar) la sesión se borra
+window.addEventListener('pagehide', () => cerrarSesion());
+// Si el navegador restaura la página desde su caché al volver atrás, se muestra sin sesión
+window.addEventListener('pageshow', e => { if (e.persisted) cerrarSesion(); });
+
+// Cierre automático por inactividad
+let temporizador;
+function reiniciarInactividad() {
+  if (!token) return;
+  clearTimeout(temporizador);
+  temporizador = setTimeout(() => cerrarSesion('Su sesión se cerró por inactividad.'), INACTIVIDAD_MS);
+}
+['pointerdown', 'keydown', 'input', 'scroll'].forEach(ev =>
+  window.addEventListener(ev, reiniciarInactividad, { passive: true }));
 
 function mostrarPanel() {
   $('vista-publica').hidden = true;
   $('panel').hidden = false;
   if (!$('e-fecha').value) $('e-fecha').value = new Date().toLocaleDateString('en-CA');
+  reiniciarInactividad();
   cargarLista();
   $('e-curso').focus();
 }
 
 function sesionExpirada(err) {
   if (err.estado !== 401) return false;
-  alert('Su sesión expiró. Inicie sesión nuevamente.');
-  location.reload();
+  cerrarSesion('Su sesión expiró. Inicie sesión nuevamente.');
   return true;
 }
 
 // ─── Emisión ─────────────────────────────────────────────────────
 // Dibuja el certificado, lo guarda en el servidor y devuelve su JPEG
 async function generarImagen(cert) {
-  const canvas = await window.GenbaCert.dibujar(cert, urlVerificacion(cert.folio));
+  const canvas = await window.GenbaCert.dibujar(cert, urlVerificacion(cert.folio), firma);
   const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
   await api('/api/certificados', { method: 'PUT', body: { folio: cert.folio, imagen: dataUrl } });
   return dataUrl;
@@ -137,9 +180,12 @@ async function descargarDeLista(cert, boton) {
   boton.disabled = true;
   try {
     let bytes;
-    const r = await fetch(`/api/certificado-imagen?folio=${cert.folio}`, { credentials: 'same-origin' });
-    if (r.ok) bytes = new Uint8Array(await r.arrayBuffer());
-    else bytes = window.GenbaCert.bytesDeDataUrl(await generarImagen(cert)); // registro sin imagen: se genera ahora
+    if (cert.estado === 'pendiente') {
+      bytes = window.GenbaCert.bytesDeDataUrl(await generarImagen(cert)); // registro sin imagen: se genera ahora
+    } else {
+      const r = await peticion(`/api/certificado-imagen?folio=${cert.folio}`);
+      bytes = new Uint8Array(await r.arrayBuffer());
+    }
     window.GenbaCert.descargarPdf(bytes, cert.folio, cert.nombre);
     if (cert.estado === 'pendiente') cargarLista();
   } catch (err) {

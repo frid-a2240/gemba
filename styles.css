@@ -856,6 +856,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .form-msg:empty { display: none; }
 .form-msg-error { color: #B42318; }
 .form-msg-ok { color: #1E7A46; }
+.form-msg-info { color: var(--navy); }
 
 .admin-bar {
   display: flex;
