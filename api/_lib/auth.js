@@ -19,9 +19,13 @@ export function iguales(a, b) {
   return timingSafeEqual(ha, hb);
 }
 
+// Valor de una variable de entorno sin espacios ni comillas pegadas por error
+const variable = nombre => String(process.env[nombre] || '').trim().replace(/^(["'])(.*)\1$/, '$2');
+
 export function credencialesValidas(usuario, contrasena) {
-  const okUsuario = iguales(usuario, process.env.ADMIN_USER);
-  const okContrasena = iguales(contrasena, process.env.ADMIN_PASSWORD);
+  // El usuario no distingue mayúsculas; la contraseña sí
+  const okUsuario = iguales(String(usuario).trim().toLowerCase(), variable('ADMIN_USER').toLowerCase());
+  const okContrasena = iguales(contrasena, variable('ADMIN_PASSWORD'));
   return okUsuario && okContrasena;
 }
 
