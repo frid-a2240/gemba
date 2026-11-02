@@ -67,7 +67,9 @@ $('form-login').addEventListener('submit', async e => {
   boton.disabled = true;
   mensaje(msg, '');
   try {
-    ({ token } = await api('/api/login', { method: 'POST', body: { usuario: form.usuario.value, contrasena: form.contrasena.value } }));
+    const sesion = await api('/api/login', { method: 'POST', body: { usuario: form.usuario.value, contrasena: form.contrasena.value } });
+    token = sesion.token;
+    $('admin-usuario').textContent = sesion.usuario;
     form.reset();
     firma = await peticion('/api/firma').then(r => r.blob()).then(createImageBitmap).catch(() => null);
     mostrarPanel();
@@ -84,6 +86,7 @@ function cerrarSesion(aviso = '') {
   firma = null;
   ultimo = null;
   clearTimeout(temporizador);
+  $('admin-usuario').textContent = '';
   $('lista').replaceChildren();
   $('r-img').removeAttribute('src');
   $('resultado-emision').hidden = true;
@@ -224,6 +227,7 @@ function fila(cert) {
   badge.className = `badge-estado badge-${cert.estado}`;
   badge.textContent = ETIQUETA[cert.estado] || cert.estado;
   estado.append(badge);
+  celda(cert.emitidoPor || '—', 'Emitió');
 
   const acciones = document.createElement('td');
   acciones.className = 'acciones';

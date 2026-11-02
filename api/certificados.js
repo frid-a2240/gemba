@@ -40,14 +40,14 @@ async function obtener(req, res, params) {
   return json(res, 200, admin ? cert : publico(cert));
 }
 
-async function crear(req, res) {
+async function crear(req, res, admin) {
   const { datos, error: msg } = validarDatos(await leerCuerpo(req, 5000));
   if (msg) return error(res, 400, msg);
 
   // Folio único: SET ... NX solo escribe si la clave no existe
   for (let i = 0; i < 5; i++) {
     const folio = nuevoFolio();
-    const cert = { folio, ...datos, estado: 'pendiente', creado: new Date().toISOString() };
+    const cert = { folio, ...datos, estado: 'pendiente', creado: new Date().toISOString(), emitidoPor: admin };
     const ok = await redis('SET', claveCert(folio), JSON.stringify(cert), 'NX');
     if (ok === 'OK') {
       await redis('ZADD', INDICE, Date.now(), folio);
@@ -102,8 +102,9 @@ export default async function handler(req, res) {
     if (!['POST', 'PUT', 'PATCH'].includes(req.method)) return metodoNoPermitido(res, ['GET', 'POST', 'PUT', 'PATCH']);
 
     if (!mismoOrigen(req)) return error(res, 403, 'Origen no permitido.');
-    if (!esAdmin(req)) return error(res, 401, 'Su sesión expiró. Inicie sesión nuevamente.');
-    if (req.method === 'POST') return await crear(req, res);
+    const admin = esAdmin(req);
+    if (!admin) return error(res, 401, 'Su sesión expiró. Inicie sesión nuevamente.');
+    if (req.method === 'POST') return await crear(req, res, admin);
     if (req.method === 'PUT') return await guardarImagen(req, res);
     return await cambiarEstado(req, res);
   } catch (e) {

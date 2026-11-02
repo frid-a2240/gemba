@@ -85,7 +85,10 @@
         <!-- Panel de administración (solo con sesión) -->
         <div class="admin" id="panel" hidden>
           <div class="admin-bar">
-            <h2>Panel de certificados</h2>
+            <div>
+              <h2>Panel de certificados</h2>
+              <p class="admin-user">Sesión iniciada como <strong id="admin-usuario"></strong></p>
+            </div>
             <button type="button" class="btn btn-outline" id="btn-salir">Cerrar sesión</button>
           </div>
 
@@ -120,7 +123,7 @@
             </div>
             <div class="table-wrap">
               <table class="cert-table">
-                <thead><tr><th scope="col">Folio</th><th scope="col">Nombre</th><th scope="col">Curso</th><th scope="col">Fecha</th><th scope="col">Estado</th><th scope="col"><span class="sr-only">Acciones</span></th></tr></thead>
+                <thead><tr><th scope="col">Folio</th><th scope="col">Nombre</th><th scope="col">Curso</th><th scope="col">Fecha</th><th scope="col">Estado</th><th scope="col">Emitió</th><th scope="col"><span class="sr-only">Acciones</span></th></tr></thead>
                 <tbody id="lista"></tbody>
               </table>
             </div>

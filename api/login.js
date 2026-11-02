@@ -24,10 +24,9 @@ export default async function handler(req, res) {
   const usuario = String(cuerpo.usuario || '').slice(0, 100);
   const contrasena = String(cuerpo.contrasena || '').slice(0, 200);
 
-  if (!credencialesValidas(usuario, contrasena)) {
-    return error(res, 401, 'Usuario o contraseña incorrectos.');
-  }
+  const admin = credencialesValidas(usuario, contrasena);
+  if (!admin) return error(res, 401, 'Usuario o contraseña incorrectos.');
 
   await redis('DEL', clave);
-  return json(res, 200, { token: crearToken() });
+  return json(res, 200, { token: crearToken(admin), usuario: admin });
 }
