@@ -80,8 +80,10 @@ window.GenbaCert = (function () {
     return lineas;
   }
 
-  function dibujarQR(ctx, texto, x, y, lado) {
-    const qr = window.qrcode(0, 'M');
+  // QR con corrección de errores alta (H, 30 %): permite cubrir el centro con el
+  // logotipo y que el código se siga leyendo.
+  function dibujarQR(ctx, texto, x, y, lado, logo) {
+    const qr = window.qrcode(0, 'H');
     qr.addData(texto);
     qr.make();
     const n = qr.getModuleCount();
@@ -92,6 +94,17 @@ window.GenbaCert = (function () {
         if (qr.isDark(r, c)) ctx.fillRect(x + c * celda, y + r * celda, celda + 0.3, celda + 0.3);
       }
     }
+    if (!logo) return;
+
+    // Recuadro blanco al centro (≈24 % del lado) con el logotipo
+    const caja = lado * 0.24;
+    const bx = x + (lado - caja) / 2, by = y + (lado - caja) / 2;
+    ctx.fillStyle = '#FFFFFF';
+    ctx.beginPath();
+    ctx.roundRect(bx, by, caja, caja, caja * 0.18);
+    ctx.fill();
+    const alto = caja * 0.8, ancho = alto * logo.width / logo.height;
+    ctx.drawImage(logo, bx + (caja - ancho) / 2, by + (caja - alto) / 2, ancho, alto);
   }
 
   // cert: { folio, nombre, curso, fecha }   urlVerificacion: dirección del QR
@@ -134,39 +147,44 @@ window.GenbaCert = (function () {
     esquina([[W, H], [W - 170, H], [W, H - 170]], NAVY);
     esquina([[W - 180, H], [W - 184, H], [W, H - 184], [W, H - 180]], PLATA);
 
-    // Logotipo
-    const gAlto = 75, gAncho = gAlto * logoG.width / logoG.height;
-    ctx.drawImage(logoG, (W - gAncho) / 2, 53, gAncho, gAlto);
-    const wmkAlto = 40, wmkAncho = wmkAlto * wordmark.width / wordmark.height;
-    ctx.drawImage(wordmark, (W - wmkAncho) / 2, 134, wmkAncho, wmkAlto);
-
     const cx = W / 2;
+
+    // Logotipo y lema debajo
+    const gAlto = 88, gAncho = gAlto * logoG.width / logoG.height;
+    ctx.drawImage(logoG, (W - gAncho) / 2, 40, gAncho, gAlto);
+    const wmkAlto = 46, wmkAncho = wmkAlto * wordmark.width / wordmark.height;
+    ctx.drawImage(wordmark, (W - wmkAncho) / 2, 134, wmkAncho, wmkAlto);
+    ctx.fillStyle = GRIS;
+    ctx.font = '600 10px Cinzel';
+    textoEspaciado(ctx, 'Excelencia Operacional. Integridad. Desarrollo.', cx, 202, 1.1);
 
     // Título
     ctx.fillStyle = NAVY;
     ctx.font = '600 40px Cinzel';
-    textoEspaciado(ctx, 'CERTIFICADO', cx, 337, 40 * 0.22);
+    textoEspaciado(ctx, 'CERTIFICADO', cx, 280, 40 * 0.22);
+    ctx.font = '600 15px Cinzel';
+    textoEspaciado(ctx, 'DE CUMPLIMIENTO', cx, 308, 15 * 0.3);
 
     ctx.fillStyle = GRIS;
     ctx.font = '600 11px Montserrat';
-    textoEspaciado(ctx, 'SE OTORGA EL PRESENTE A', cx, 375, 11 * 0.32);
+    textoEspaciado(ctx, 'SE OTORGA EL PRESENTE A', cx, 350, 11 * 0.32);
 
     // Nombre (se reduce si es muy largo)
     ctx.fillStyle = NAVY;
     const tNombre = ajustar(ctx, cert.nombre, t => `600 ${t}px Cinzel`, 34, 20, 820, 0.04);
-    textoEspaciado(ctx, cert.nombre, cx, 430, tNombre * 0.04);
+    textoEspaciado(ctx, cert.nombre, cx, 404, tNombre * 0.04);
     const anchoLinea = Math.max(614, anchoEspaciado(ctx, cert.nombre, tNombre * 0.04) + 77);
     ctx.strokeStyle = PLATA;
     ctx.lineWidth = 1.5;
     ctx.beginPath();
-    ctx.moveTo(cx - anchoLinea / 2, 447);
-    ctx.lineTo(cx + anchoLinea / 2, 447);
+    ctx.moveTo(cx - anchoLinea / 2, 421);
+    ctx.lineTo(cx + anchoLinea / 2, 421);
     ctx.stroke();
 
     ctx.fillStyle = TEXTO;
     ctx.font = '400 13px Montserrat';
     ctx.textAlign = 'center';
-    ctx.fillText('por haber acreditado satisfactoriamente el curso', cx, 478);
+    ctx.fillText('por haber acreditado satisfactoriamente el curso', cx, 454);
 
     // Curso (se reduce y, si hace falta, ocupa dos renglones)
     ctx.fillStyle = NAVY;
@@ -174,48 +192,43 @@ window.GenbaCert = (function () {
     let lineasCurso = renglones(ctx, cert.curso, 820);
     if (lineasCurso.length > 2) { tCurso = 14; ctx.font = '700 14px Montserrat'; lineasCurso = renglones(ctx, cert.curso, 820).slice(0, 2); }
     ctx.textAlign = 'center';
-    lineasCurso.forEach((l, i) => ctx.fillText(l, cx, 515 + i * (tCurso + 6)));
+    lineasCurso.forEach((l, i) => ctx.fillText(l, cx, 490 + i * (tCurso + 6)));
     const extra = (lineasCurso.length - 1) * (tCurso + 6);
 
     ctx.fillStyle = TEXTO;
     ctx.font = '400 12.5px Montserrat';
-    ctx.fillText(`${CIUDAD}, a ${fechaLarga(cert.fecha)}`, cx, 541 + extra);
+    ctx.fillText(`${CIUDAD}, a ${fechaLarga(cert.fecha)}`, cx, 518 + extra);
 
-    // Firma
-    const colFirma = 86 + 884 / 6;
+    // Firma, al centro debajo de la fecha
+    const lineaFirma = 646 + extra;
     if (firma) {
-      const fAlto = 92, fAncho = fAlto * firma.width / firma.height;
+      const fAlto = 86, fAncho = fAlto * firma.width / firma.height;
       // El trazo cruza ligeramente la línea, sin tocar el nombre
-      ctx.drawImage(firma, colFirma - fAncho / 2, 724 - fAlto + 3, fAncho, fAlto);
+      ctx.drawImage(firma, cx - fAncho / 2, lineaFirma - fAlto + 6, fAncho, fAlto);
     }
     ctx.strokeStyle = NAVY;
     ctx.lineWidth = 1.2;
     ctx.beginPath();
-    ctx.moveTo(colFirma - 125, 724);
-    ctx.lineTo(colFirma + 125, 724);
+    ctx.moveTo(cx - 125, lineaFirma);
+    ctx.lineTo(cx + 125, lineaFirma);
     ctx.stroke();
     ctx.fillStyle = NAVY;
     ctx.font = '700 13px Montserrat';
     ctx.textAlign = 'center';
-    ctx.fillText(FIRMANTE.nombre, colFirma, 744);
+    ctx.fillText(FIRMANTE.nombre, cx, lineaFirma + 20);
     ctx.fillStyle = GRIS;
     ctx.font = '400 10.5px Montserrat';
-    textoEspaciado(ctx, FIRMANTE.cargo, colFirma, 762, 10.5 * 0.2);
+    textoEspaciado(ctx, FIRMANTE.cargo, cx, lineaFirma + 38, 10.5 * 0.2);
 
-    // Lema
-    ctx.fillStyle = GRIS;
-    ctx.font = '600 9.5px Cinzel';
-    textoEspaciado(ctx, 'Excelencia Operacional. Integridad. Desarrollo.', cx, 718, 0.95);
-
-    // Folio (permite verificar el certificado aunque no se pueda escanear el QR)
-    ctx.fillStyle = GRIS;
-    ctx.font = '600 10px Montserrat';
-    textoEspaciado(ctx, `FOLIO: ${cert.folio}`, cx, 758, 10 * 0.2);
-
-    // Código QR
+    // Código QR con el logotipo al centro, y el folio debajo
+    // Ubicado fuera de la franja diagonal de la esquina inferior derecha
+    const qrLado = 132, qrX = 900 - qrLado, qrY = 596;
     ctx.fillStyle = '#FFFFFF';
-    ctx.fillRect(862, 660, 108, 108);
-    dibujarQR(ctx, urlVerificacion, 867, 665, 98);
+    ctx.fillRect(qrX, qrY, qrLado, qrLado);
+    dibujarQR(ctx, urlVerificacion, qrX + 5, qrY + 5, qrLado - 10, logoG);
+    ctx.fillStyle = GRIS;
+    ctx.font = '600 9px Montserrat';
+    textoEspaciado(ctx, `FOLIO: ${cert.folio}`, qrX + qrLado / 2, qrY + qrLado + 16, 9 * 0.15);
 
     return canvas;
   }
