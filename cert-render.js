@@ -207,6 +207,11 @@ window.GenbaCert = (function () {
     ctx.font = '600 9.5px Cinzel';
     textoEspaciado(ctx, 'Excelencia Operacional. Integridad. Desarrollo.', cx, 718, 0.95);
 
+    // Folio (permite verificar el certificado aunque no se pueda escanear el QR)
+    ctx.fillStyle = NAVY;
+    ctx.font = '600 10.5px Montserrat';
+    textoEspaciado(ctx, `Folio: ${cert.folio}`, cx, 740, 10.5 * 0.08);
+
     // Código QR
     ctx.fillStyle = '#FFFFFF';
     ctx.fillRect(862, 660, 108, 108);

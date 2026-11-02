@@ -195,6 +195,22 @@ async function descargarDeLista(cert, boton) {
   }
 }
 
+// Vuelve a dibujar un certificado con el diseño actual (mismo folio y QR)
+async function regenerar(cert, boton) {
+  boton.disabled = true;
+  const texto = boton.textContent;
+  boton.textContent = 'Generando…';
+  try {
+    await generarImagen(cert);
+    boton.textContent = 'Listo ✓';
+    setTimeout(() => { boton.textContent = texto; boton.disabled = false; }, 2000);
+  } catch (err) {
+    boton.textContent = texto;
+    boton.disabled = false;
+    if (!sesionExpirada(err)) alert(err.message);
+  }
+}
+
 async function cambiarEstado(cert, estado) {
   const accion = estado === 'revocado' ? 'revocar' : 'reactivar';
   if (!confirm(`¿Desea ${accion} el certificado ${cert.folio} de ${cert.nombre}?`)) return;
@@ -236,6 +252,7 @@ function fila(cert) {
     acciones.append(b);
   };
   btn('PDF', b => descargarDeLista(cert, b));
+  if (cert.estado === 'vigente') btn('Regenerar', b => regenerar(cert, b));
   if (cert.estado === 'vigente') btn('Revocar', () => cambiarEstado(cert, 'revocado'), 'btn-mini-danger');
   if (cert.estado === 'revocado') btn('Reactivar', () => cambiarEstado(cert, 'vigente'));
   tr.append(acciones);
