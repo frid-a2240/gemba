@@ -335,18 +335,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
   color: var(--silver-300);
   padding: 64px 0 72px;
 }
-.breadcrumb {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 28px;
-  font-size: 0.8rem;
-  color: var(--silver);
-}
-.breadcrumb a { text-decoration: none; }
-.breadcrumb a:hover { color: var(--white); text-decoration: underline; }
-.breadcrumb li + li::before { content: "/"; margin-right: 8px; opacity: 0.6; }
-.breadcrumb [aria-current] { color: var(--white); }
 .page-head h1 { color: var(--white); margin-bottom: 20px; max-width: 820px; }
 .page-head p { font-size: 1.08rem; max-width: 680px; }
 
@@ -978,7 +966,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 /* Al cargar: encabezado de la página */
 .hero .label, .hero h1, .hero-lede, .hero-actions,
-.page-head .breadcrumb, .page-head h1, .page-head p {
+.page-head h1, .page-head p {
   animation: fade-up .6s cubic-bezier(.2,.7,.2,1) both;
 }
 .hero h1, .page-head h1               { animation-delay: .06s; }
