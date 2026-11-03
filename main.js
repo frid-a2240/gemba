@@ -116,19 +116,47 @@ if (subLinks.length) {
 }
 
 // ─── Formulario de contacto ──────────────────────────────────────
-// Sitio estático: no hay servidor que reciba datos. El formulario arma
-// un correo en el cliente de correo del usuario con la información.
+// Se envía directo por /api/contacto. Si el envío aún no está configurado,
+// se arma el correo en la aplicación de correo del usuario.
 const form = document.getElementById('contact-form');
 
 if (form) {
   const status = form.querySelector('.form-status');
+  const boton = form.querySelector('button[type="submit"]');
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     if (form.elements.website.value) return; // honeypot anti-bots
     if (!form.reportValidity()) return;
 
     const field = name => form.elements[name].value.trim();
+    const datos = Object.fromEntries(
+      ['nombre', 'empresa', 'correo', 'telefono', 'servicio', 'mensaje', 'website'].map(n => [n, field(n)])
+    );
+
+    boton.disabled = true;
+    status.textContent = 'Enviando su solicitud…';
+    let r = null;
+    try {
+      r = await fetch('/api/contacto', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos),
+      });
+    } catch { /* sin conexión: se usa la aplicación de correo */ }
+    boton.disabled = false;
+
+    if (r && r.ok) {
+      form.reset();
+      status.textContent = 'Gracias. Hemos recibido su solicitud y nos pondremos en contacto con usted a la brevedad.';
+      return;
+    }
+    if (r && r.status !== 503 && r.status !== 404) {
+      const { error } = await r.json().catch(() => ({}));
+      status.textContent = error || 'No fue posible enviar su solicitud. Intente de nuevo más tarde.';
+      return;
+    }
+
     const subject = `Solicitud de información — ${field('empresa')}`;
     const body = [
       `Nombre: ${field('nombre')}`,
